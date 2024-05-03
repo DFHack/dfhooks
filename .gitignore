@@ -11,3 +11,5 @@
 
 # CLion
 .idea
+
+/build
