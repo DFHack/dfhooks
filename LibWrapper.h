@@ -13,7 +13,7 @@ typedef bool (*dfhooks_ncurses_key_fn)(int key);
 
 struct LibWrapper {
     void* handle = nullptr;
-    int priority = 0;
+    int32_t priority = 0;
     dfhooks_init_fn init = nullptr;
     dfhooks_shutdown_fn shutdown = nullptr;
     dfhooks_update_fn update = nullptr;
