@@ -26,7 +26,7 @@ ChainLoader::ChainLoader() {
         auto fname = dir_entry.path().filename();
         if (fname.extension() != search_ext || fname.stem().string().find(search_prefix) != 0)
             continue;
-        auto wrapper = new LibWrapper(fname);
+        auto wrapper = new LibWrapper(fname.string());
         if (wrapper->handle)
             priq.emplace(wrapper);
         else
