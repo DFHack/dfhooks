@@ -1,2 +1,2 @@
 # dfhooks
-DF hook chainloader
+Dwarf Fortress dfhooks API chainloader
