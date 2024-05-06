@@ -68,4 +68,3 @@ DFhackCExport bool dfhooks_ncurses_key(int key) {
         return false;
     return chain->ncurses_key(key);
 }
-
