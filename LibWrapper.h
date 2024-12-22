@@ -9,6 +9,7 @@ typedef void (*dfhooks_shutdown_fn)();
 typedef void (*dfhooks_update_fn)();
 typedef void (*dfhooks_prerender_fn)();
 typedef bool (*dfhooks_sdl_event_fn)(SDL_Event* event);
+typedef void (*dfhooks_sdl_loop_fn)();
 typedef bool (*dfhooks_ncurses_key_fn)(int key);
 
 struct LibWrapper {
@@ -19,6 +20,7 @@ struct LibWrapper {
     dfhooks_update_fn update = nullptr;
     dfhooks_prerender_fn prerender = nullptr;
     dfhooks_sdl_event_fn sdl_event = nullptr;
+    dfhooks_sdl_loop_fn sdl_loop = nullptr;
     dfhooks_ncurses_key_fn ncurses_key = nullptr;
 
     LibWrapper(const std::string& fname);

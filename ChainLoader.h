@@ -14,6 +14,7 @@ public:
     void update();
     void prerender();
     bool sdl_event(SDL_Event* event);
+    void sdl_loop();
     bool ncurses_key(int key);
 
 private:

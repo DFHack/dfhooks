@@ -83,6 +83,13 @@ bool ChainLoader::sdl_event(SDL_Event* event) {
     return false;
 }
 
+void ChainLoader::sdl_loop() {
+    for (auto & lib : libs) {
+        if (lib->sdl_loop)
+            lib->sdl_loop();
+    }
+}
+
 bool ChainLoader::ncurses_key(int key) {
     for (auto & lib : libs) {
         if (lib->ncurses_key)

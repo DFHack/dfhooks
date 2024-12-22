@@ -59,6 +59,14 @@ DFhackCExport bool dfhooks_sdl_event(SDL_Event* event) {
     return chain->sdl_event(event);
 }
 
+// called from the main thread just after setting mouse state in gps and just
+// before rendering the screen buffer to the screen.
+DFhackCExport void dfhooks_sdl_loop() {
+    if (!chain)
+        return;
+    chain->sdl_loop();
+}
+
 // called from the main thread for each utf-8 char read from the ncurses input
 // key is positive for ncurses keys and negative for everything else
 // if true is returned, then the event has been consumed and further processing

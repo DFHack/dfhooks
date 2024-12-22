@@ -48,6 +48,7 @@ LibWrapper::LibWrapper(const string& fname) {
     update = (dfhooks_update_fn)load_sym(handle, "dfhooks_update");
     prerender = (dfhooks_prerender_fn)load_sym(handle, "dfhooks_prerender");
     sdl_event = (dfhooks_sdl_event_fn)load_sym(handle, "dfhooks_sdl_event");
+    sdl_loop = (dfhooks_sdl_loop_fn)load_sym(handle, "dfhooks_sdl_loop");
     ncurses_key = (dfhooks_ncurses_key_fn)load_sym(handle, "dfhooks_ncurses_key");
 }
 
