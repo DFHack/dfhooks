@@ -1,16 +1,25 @@
 #include "LibWrapper.h"
 
+#include <filesystem>
+#include <iostream>
+
 using std::string;
+using std::filesystem::path;
 
 #if _WIN32
 #  include <windows.h>
+#  include <libloaderapi.h>
 #else
 #  include <dlfcn.h>
 #endif
 
-static void* open_library(const string& fname) {
+static void* open_library(std::filesystem::path fname) {
 #if _WIN32
-    return LoadLibrary(fname.c_str());
+    std::filesystem::path path = std::filesystem::canonical(fname);
+    std::filesystem::path ppath = path.parent_path();
+    [[maybe_unused]] DLL_DIRECTORY_COOKIE cookie = AddDllDirectory(ppath.wstring().c_str());
+    auto handle = LoadLibraryExW(path.filename().wstring().c_str(), NULL, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+    return handle;
 #else
     return dlopen(fname.c_str(), RTLD_LAZY);
 #endif
@@ -35,7 +44,7 @@ static void* load_sym(void* handle, const char* sym) {
 #endif
 }
 
-LibWrapper::LibWrapper(const string& fname) {
+LibWrapper::LibWrapper(const std::filesystem::path& fname) {
     handle = open_library(fname);
     if (!handle)
         return;

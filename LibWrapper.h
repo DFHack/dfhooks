@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
 
 union SDL_Event;
 
@@ -23,6 +24,6 @@ struct LibWrapper {
     dfhooks_sdl_loop_fn sdl_loop = nullptr;
     dfhooks_ncurses_key_fn ncurses_key = nullptr;
 
-    LibWrapper(const std::string& fname);
+    LibWrapper(const std::filesystem::path& fname);
     virtual ~LibWrapper();
 };

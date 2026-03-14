@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <queue>
+#include <fstream>
 
 using std::string;
 using std::vector;
@@ -22,15 +23,35 @@ ChainLoader::ChainLoader() {
     auto cmp = [](const LibWrapper * lhs, const LibWrapper * rhs) { return lhs->priority < rhs->priority; };
     std::priority_queue<LibWrapper*, vector<LibWrapper*>, decltype(cmp)> priq(cmp);
 
-    for (auto const& dir_entry : std::filesystem::directory_iterator{"."}) {
+    for (auto const& dir_entry : std::filesystem::directory_iterator{"."})
+    {
         auto fname = dir_entry.path().filename();
-        if (fname.extension() != search_ext || fname.stem().string().find(search_prefix) != 0)
+        if (fname.stem().string().find(search_prefix) != 0)
             continue;
-        auto wrapper = new LibWrapper(fname.string());
-        if (wrapper->handle)
-            priq.emplace(wrapper);
-        else
-            delete wrapper;
+
+        if (fname.extension() == ".ini")
+        {
+            std::string indirection;
+            std::ifstream ini_file{fname};
+            std::getline(ini_file, indirection);
+            if (!indirection.empty())
+            {
+                std::filesystem::path lib{indirection};
+                auto wrapper = new LibWrapper(lib);
+                if (wrapper->handle)
+                    priq.emplace(wrapper);
+                else
+                    delete wrapper;
+            }
+        }
+        else if (fname.extension() == search_ext)
+        {
+            auto wrapper = new LibWrapper(fname);
+            if (wrapper->handle)
+                priq.emplace(wrapper);
+            else
+                delete wrapper;
+        }
     }
     while (!priq.empty()) {
         auto lib = priq.top();
