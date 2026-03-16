@@ -5,6 +5,7 @@
 
 union SDL_Event;
 
+typedef void (*dfhooks_preinit_fn)(std::filesystem::path);
 typedef void (*dfhooks_init_fn)();
 typedef void (*dfhooks_shutdown_fn)();
 typedef void (*dfhooks_update_fn)();
@@ -16,6 +17,7 @@ typedef bool (*dfhooks_ncurses_key_fn)(int key);
 struct LibWrapper {
     void* handle = nullptr;
     int32_t priority = 0;
+    dfhooks_preinit_fn preinit = nullptr;
     dfhooks_init_fn init = nullptr;
     dfhooks_shutdown_fn shutdown = nullptr;
     dfhooks_update_fn update = nullptr;
