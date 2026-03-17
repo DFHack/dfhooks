@@ -54,14 +54,14 @@ LibWrapper::LibWrapper(const std::filesystem::path& fname) {
     int32_t * priority_sym = (int *)load_sym(handle, "dfhooks_priority");
     if (priority_sym) priority = *priority_sym;
 
-    preinit = (dfhooks_preinit_fn)load_sym(handle, "dfhooks_preinit");
-    init = (dfhooks_init_fn)load_sym(handle, "dfhooks_init");
-    shutdown = (dfhooks_shutdown_fn)load_sym(handle, "dfhooks_shutdown");
-    update = (dfhooks_update_fn)load_sym(handle, "dfhooks_update");
-    prerender = (dfhooks_prerender_fn)load_sym(handle, "dfhooks_prerender");
-    sdl_event = (dfhooks_sdl_event_fn)load_sym(handle, "dfhooks_sdl_event");
-    sdl_loop = (dfhooks_sdl_loop_fn)load_sym(handle, "dfhooks_sdl_loop");
-    ncurses_key = (dfhooks_ncurses_key_fn)load_sym(handle, "dfhooks_ncurses_key");
+    preinit = (dfhooks_preinit_fn*)load_sym(handle, "dfhooks_preinit");
+    init = (dfhooks_init_fn*)load_sym(handle, "dfhooks_init");
+    shutdown = (dfhooks_shutdown_fn*)load_sym(handle, "dfhooks_shutdown");
+    update = (dfhooks_update_fn*)load_sym(handle, "dfhooks_update");
+    prerender = (dfhooks_prerender_fn*)load_sym(handle, "dfhooks_prerender");
+    sdl_event = (dfhooks_sdl_event_fn*)load_sym(handle, "dfhooks_sdl_event");
+    sdl_loop = (dfhooks_sdl_loop_fn*)load_sym(handle, "dfhooks_sdl_loop");
+    ncurses_key = (dfhooks_ncurses_key_fn*)load_sym(handle, "dfhooks_ncurses_key");
 
     if (preinit)
         preinit(fname);
